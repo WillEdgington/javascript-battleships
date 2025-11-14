@@ -1,6 +1,6 @@
 import Gameboard from "../src/gameboard.js";
 
-describe("Gameboard", () => {
+describe("Gameboard Object", () => {
   test("place ship", () => {
     const board = Gameboard();
     expect(board.placeShip(0, 0, 3, false)).toBe(true);
