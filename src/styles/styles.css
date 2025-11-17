@@ -5,6 +5,7 @@ body {
 #boards {
   display: flex;
   gap: 40px;
+  margin: auto;
 }
 
 .board {

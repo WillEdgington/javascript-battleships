@@ -1,4 +1,5 @@
 import Player from "../player.js";
+import PlacementController from "./placementController.js";
 
 class TurnNode {
     constructor(player, next = null) {
@@ -17,11 +18,8 @@ const GameController = (() => {
     player1 = Player(false);
     player2 = Player(true);
 
-    player1.gameboard.placeShip(0, 0, 4, true);
-    player1.gameboard.placeShip(2, 2, 3, false);
-
-    player2.gameboard.placeShip(5, 5, 3, false);
-    player2.gameboard.placeShip(0, 0, 4, true);
+    PlacementController.randomise(player1.gameboard);
+    PlacementController.randomise(player2.gameboard);
 
     curTurn = new TurnNode(player1);
     curTurn.next = new TurnNode(player2);

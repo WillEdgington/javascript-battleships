@@ -28,5 +28,5 @@ export default function Player(isComputer=false) {
     isComputer,
     gameboard,
     attack
-  }
+  };
 }

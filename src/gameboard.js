@@ -7,20 +7,28 @@ export default function Gameboard(size = 10) {
   const ships = [];
   const missedAttacks = [];
   
+  function reset() {
+    const board = Array.from({ length: size }, () =>
+      Array.from({ length: size }, () => ({ ship: null, canHit: true }))
+    );
+    const ships = [];
+    const missedAttacks = [];
+  }
+  
   function isValidPlacement(x, y, length, horizontal=true) {
     if (horizontal) {
       if (x + length > size) return false; 
-      for (let i = -1; i <= length; i++) {
-        if (y > 0 && x + i >= 0 && x + i !== size && board[y - 1][x + i].ship !== null) return false;
-        if (y < size - 1 && x + i >= 0 && x + i !== size && board[y + 1][x + i].ship !== null) return false;
-        if (i !== length && i !== -1 && board[y][x + i].ship !== null) return false;
+      for (let j = Math.max(0, x-1); j < Math.min(x+length+1, size); j++) {
+        for (let i = Math.max(0, y-1); i < Math.min(y+2, size); i++) {
+          if (board[i][j].ship !== null) return false;
+        }
       }
     } else {
       if (y + length > size) return false; 
-      for (let i = -1; i <= length; i++) {
-        if (x > 0 && y + i >= 0 && y + i !== size && board[y + i][x - 1].ship !== null) return false;
-        if (x < size - 1 && y + i >= 0 && y + i !== size && board[y + i][x + 1].ship !== null) return false;
-        if (i !== length && i !== -1 && board[y + i][x].ship !== null) return false;
+      for (let j = Math.max(0, x-1); j < Math.min(x+2, size); j++) {
+        for (let i = Math.max(0, y-1); i < Math.min(y+length+1, size); i++) {
+          if (board[i][j].ship !== null) return false;
+        }
       }
     }
     return true;
@@ -54,6 +62,7 @@ export default function Gameboard(size = 10) {
   }
 
   return {
+    reset,
     placeShip,
     receiveAttack,
     allShipsSunk,
