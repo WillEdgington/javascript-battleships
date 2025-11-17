@@ -7,13 +7,14 @@ const DOMController = (() => {
   }
 
   function playCell(x=null, y=null) {
+    showMessage("");
     const result = GameController.playerAttack(x, y);
     const state = GameController.getState();
     render(state);
     if (state.gameOver) {
       showMessage(`${result.attacker.isComputer ? "Computer" : "Player"} wins`);
     } else if (!result.valid) {
-      showMessage("invalid move");
+      showMessage("invalid move.");
     } else if (state.curPlayer.isComputer) {
       playCell();
     }
@@ -41,11 +42,11 @@ const DOMController = (() => {
     p1.innerHTML = "";
     p2.innerHTML = "";
 
-    renderBoard(gameboard1, p1);
+    renderBoard(gameboard1, p1, true);
     renderBoard(gameboard2, p2);
   }
 
-  function renderBoard(gameboard, container) {
+  function renderBoard(gameboard, container, showShips = false) {
     const board = gameboard.board;
     const size = board.length
 
@@ -64,6 +65,8 @@ const DOMController = (() => {
           } else {
             cell.classList.add("miss");
           }
+        } else if (cellData.ship && showShips) {
+          cell.classList.add("ship");
         }
         
         container.appendChild(cell)

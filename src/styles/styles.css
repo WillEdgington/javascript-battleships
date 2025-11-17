@@ -19,13 +19,22 @@ body {
   height: 30px;
   background: #d0d0d0;
   border: 1px solid #999;
+}
+
+#enemy-board div.cell {
   cursor: pointer;
 }
 
 .board div.hit {
   background: red;
+  border: 1px solid red;
 }
 
 .board div.miss {
   background: white;
+}
+
+.board div.ship {
+  background: rgb(18, 4, 216);
+  border: 1px solid rgb(18, 4, 216);
 }
