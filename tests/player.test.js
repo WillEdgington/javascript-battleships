@@ -15,4 +15,11 @@ describe("Player Object", () => {
     const p2 = Player();
     expect(p1.gameboard && p2.gameboard && p1.gameboard !== p2.gamebaord).toBe(true)
   });
+
+  test("robot can attack", () => {
+    const p1 = Player(true);
+    const p2 = Player();
+    p2.gameboard.placeShip(0, 0, 1);
+    expect(p1.attack(p2)).toBe(true);
+  });
 });
