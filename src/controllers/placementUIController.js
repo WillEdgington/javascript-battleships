@@ -18,7 +18,7 @@ const PlacementUIController = (() => {
   }
 
   function buildLayout() {
-    root.innerHtml = "";
+    root.innerHTML = "";
 
     const wrapper = document.createElement("div");
     wrapper.id = "placement-wrapper";
@@ -29,7 +29,8 @@ const PlacementUIController = (() => {
     const randomBtn = document.createElement("button");
     randomBtn.textContent = "Randomise";
     randomBtn.addEventListener("click", () => {
-      PlacementController.randomise(gameboard)
+      PlacementController.randomise(gameboard);
+      renderBoard();
     });
 
     const playBtn = document.createElement("button");
@@ -72,6 +73,7 @@ const PlacementUIController = (() => {
         boardEl.appendChild(cell);
       }
     }
+    attachShipClickListener();
   }
 
   function attachUIEvents() {
@@ -107,9 +109,29 @@ const PlacementUIController = (() => {
       y,
       horizontal
     );
-
     draggingShip = null;
     renderBoard();
+  }
+
+  function attachShipClickListener() {
+    boardEl.querySelectorAll(".cell").forEach(cell => {
+      if (cell.classList.contains("ship")) {
+        cell.addEventListener("click", (e) => {
+          const x = Number(e.target.dataset.x);
+          const y = Number(e.target.dataset.y);
+          const ship = gameboard.board[y][x].ship;
+
+          PlacementController.tryMoveShip(
+            gameboard,
+            ship,
+            ship.x,
+            ship.y,
+            !ship.horizontal
+          );
+          renderBoard();
+        });
+      }
+    });
   }
 
   return { init };

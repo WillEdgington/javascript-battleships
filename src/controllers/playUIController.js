@@ -93,11 +93,13 @@ const PlayUIController = (() => {
 
   function attachListenersToEnemyBoard() {
     enemyBoardEl.querySelectorAll(".cell").forEach(cell => {
-      cell.addEventListener("click", (e) => {
-        const x = Number(e.target.dataset.x);
-        const y = Number(e.target.dataset.y);
-        playCell(x, y)
-      });
+      if (!(cell.classList.contains("hit") || cell.classList.contains(".miss"))) {
+        cell.addEventListener("click", (e) => {
+          const x = Number(e.target.dataset.x);
+          const y = Number(e.target.dataset.y);
+          playCell(x, y)
+        });
+      }
     });
   }
 
