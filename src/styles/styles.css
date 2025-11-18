@@ -8,14 +8,15 @@ body {
   margin: auto;
 }
 
-.board {
+.board,
+#placement-board {
   display: grid;
   grid-template-columns: repeat(10, 30px);
   grid-template-rows: repeat(10, 30px);
   gap: 2px;
 }
 
-.board div.cell {
+.cell {
   width: 30px;
   height: 30px;
   background: #d0d0d0;
@@ -38,4 +39,8 @@ body {
 .board div.ship {
   background: rgb(18, 4, 216);
   border: 1px solid rgb(18, 4, 216);
+}
+
+#placement-board div.ship {
+  cursor: grab;
 }

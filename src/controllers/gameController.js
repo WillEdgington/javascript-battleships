@@ -9,22 +9,36 @@ class TurnNode {
 }
 
 const GameController = (() => {
+  const GameState = {
+    PLACEMENT: "placement",
+    PLAY: "play"
+  };
   let player1;
   let player2;
   let gameOver;
   let curTurn;
+  let state = GameState.PLACEMENT
 
-  function startGame() {
+  function initGame() {
     player1 = Player(false);
     player2 = Player(true);
 
     PlacementController.randomise(player1.gameboard);
     PlacementController.randomise(player2.gameboard);
+    
+    gameOver = false;
+    curTurn = null;
+    state = GameState.PLACEMENT;
 
+    return getState();
+  }
+
+  function startPlay() {
     curTurn = new TurnNode(player1);
     curTurn.next = new TurnNode(player2);
     curTurn.next.next = curTurn;
-    gameOver = false;
+
+    state = GameState.PLAY;
     return getState();
   }
 
@@ -48,17 +62,21 @@ const GameController = (() => {
     return {
       player1,
       player2,
-      get curPlayer() { return curTurn.player; },
+      phase: state,
+      get curPlayer() { return curTurn !== null ? curTurn.player : null; },
       get gameOver() { return gameOver; }
     };
   }
 
   return {
-    startGame,
+    initGame,
+    startPlay,
     playerAttack,
     getState,
     get attacking() { return curTurn.player; },
-    get defending() { return curTurn.next.player; }
+    get defending() { return curTurn.next.player; },
+    get state() { return state; },
+    GameState
   }
 })();
 
