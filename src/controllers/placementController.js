@@ -29,8 +29,21 @@ const PlacementController = (() => {
     }
   }
 
+  function tryMoveShip(gameboard, ship, newX, newY, newHorizontal) {
+    let length = ship.length;
+    let x = ship.x;
+    let y = ship.y;
+    let horizontal = ship.horizontal;
+    
+    gameboard.removeShip(ship);
+    if (gameboard.placeShip(newX, newY, length, newHorizontal)) return true;
+    else gameboard.placeShip(x, y, length, horizontal);
+    return false;
+  }
+
   return {
-    randomise
+    randomise,
+    tryMoveShip
   };
 })();
 

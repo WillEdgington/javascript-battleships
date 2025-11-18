@@ -8,11 +8,14 @@ export default function Gameboard(size = 10) {
   const missedAttacks = [];
   
   function reset() {
-    const board = Array.from({ length: size }, () =>
-      Array.from({ length: size }, () => ({ ship: null, canHit: true }))
-    );
-    const ships = [];
-    const missedAttacks = [];
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        board[y][x].ship = null;
+        board[y][x].canHit = true;
+      }
+    }
+    ships.length = 0;
+    missedAttacks.length = 0;
   }
   
   function isValidPlacement(x, y, length, horizontal=true) {
@@ -37,7 +40,7 @@ export default function Gameboard(size = 10) {
   function placeShip(x, y, length, horizontal=true) {
     if (!isValidPlacement(x, y, length, horizontal)) return false;
     
-    const ship = Ship(length);
+    const ship = Ship(length, x, y, horizontal);
     ships.push(ship);
 
     for (let i = 0; i < length; i++) {
@@ -45,6 +48,26 @@ export default function Gameboard(size = 10) {
         else board[y + i][x].ship = ship;
     }
     return true;
+  }
+
+  function removeShip(ship) {
+    let length = ship.length;
+    let x = ship.x;
+    let y = ship.y;
+    let horizontal = ship.horizontal;
+
+    for (let i = 0; i < length; i++) {
+      if (horizontal) {
+        board[y][x + i].ship = null;
+        board[y][x + i].canHit = true;
+      } else {
+        board[y + i][x].ship = null;
+        board[y + i][x].canHit = true;
+      }
+    }
+
+    const index = ships.indexOf(ship);
+    if (index !== -1) ships.splice(index, 1);
   }
 
   function receiveAttack(x, y) {
@@ -64,6 +87,7 @@ export default function Gameboard(size = 10) {
   return {
     reset,
     placeShip,
+    removeShip,
     receiveAttack,
     allShipsSunk,
     get misses() { return missedAttacks; },
