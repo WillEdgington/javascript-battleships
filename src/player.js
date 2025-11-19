@@ -3,7 +3,7 @@ import Gameboard from "./gameboard.js";
 export default function Player(isComputer=false) {
   const gameboard = Gameboard();
 
-  function getRobotXY(opponent) {
+  function randomRobotXY(opponent) {
     const size = opponent.gameboard.board.length;
     let x, y;
     do {
@@ -11,6 +11,10 @@ export default function Player(isComputer=false) {
       y = Math.floor(Math.random() * size);
     } while (!opponent.gameboard.board[y][x].canHit);
     return { x, y };
+  }
+
+  function getRobotXY(opponent) {
+    return randomRobotXY(opponent);
   }
    
   function attack(opponent, x=null, y=null) {

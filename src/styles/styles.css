@@ -44,3 +44,30 @@ body {
 #placement-board div.ship {
   cursor: grab;
 }
+
+.ship-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ship-row {
+  display: flex;
+  gap: 10px;
+}
+
+.ship-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.mini-cell {
+  width: 10px;
+  height: 10px;
+  background: #4e4e4e;
+  border: 1px solid #000;
+}
+
+.ship-bar.sunk .mini-cell {
+  background: red;
+}

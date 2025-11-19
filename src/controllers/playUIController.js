@@ -5,6 +5,8 @@ const PlayUIController = (() => {
   let messageEl;
   let playerBoardEl;
   let enemyBoardEl;
+  let playerStatusEl;
+  let enemyStatusEl;
 
   function init(state, container) {
     root = container;
@@ -24,16 +26,26 @@ const PlayUIController = (() => {
     const boards = document.createElement("div");
     boards.id = "boards";
 
+    playerStatusEl = document.createElement("div");
+    playerStatusEl.id = "player-ship-status";
+    playerStatusEl.classList.add("ship-status");
+
     playerBoardEl = document.createElement("div");
     playerBoardEl.id = "player-board";
     playerBoardEl.classList.add("board");
+
+    enemyStatusEl = document.createElement("div");
+    enemyStatusEl.id = "enemy-ship-status";
+    enemyStatusEl.classList.add("ship-status");
 
     enemyBoardEl = document.createElement("div");
     enemyBoardEl.id = "enemy-board";
     enemyBoardEl.classList.add("board")
 
+    boards.appendChild(playerStatusEl);
     boards.appendChild(playerBoardEl);
     boards.appendChild(enemyBoardEl);
+    boards.appendChild(enemyStatusEl);
     wrapper.appendChild(boards);
     wrapper.appendChild(messageEl);
 
@@ -65,6 +77,9 @@ const PlayUIController = (() => {
 
     renderBoard(gameboard1, playerBoardEl, true);
     renderBoard(gameboard2, enemyBoardEl, false);
+    
+    renderShipStatus(gameboard1, playerStatusEl);
+    renderShipStatus(gameboard2, enemyStatusEl);
   }
 
   function renderBoard(gameboard, container, showShips = false) {
@@ -89,6 +104,40 @@ const PlayUIController = (() => {
         container.appendChild(cell);
       }
     }
+  }
+
+  function renderShipStatus(gameboard, container) {
+    container.innerHTML = "";
+
+    const groups = {};
+    for (const ship of gameboard.ships) {
+      if (!groups[ship.length]) groups[ship.length] = [];
+      groups[ship.length].push(ship);
+    }
+
+    const lengths = Object.keys(groups)
+      .map(Number)
+      .sort((a, b) => b - a);
+
+    lengths.forEach(length => {
+      const row = document.createElement("div");
+      row.classList.add("ship-row");
+
+      groups[length].forEach(ship => {
+        const bar = document.createElement("div");
+        bar.classList.add("ship-bar");
+        if (ship.isSunk()) bar.classList.add("sunk");
+
+        for (let i = 0; i < length; i++) {
+          const cell = document.createElement("div");
+          cell.classList.add("mini-cell");
+          bar.appendChild(cell);
+        }
+
+        row.appendChild(bar);
+      });
+      container.appendChild(row);
+    });
   }
 
   function attachListenersToEnemyBoard() {

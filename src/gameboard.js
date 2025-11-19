@@ -92,5 +92,6 @@ export default function Gameboard(size = 10) {
     allShipsSunk,
     get misses() { return missedAttacks; },
     get board() { return board; },
+    get ships() { return ships; },
   };
 }
