@@ -58,7 +58,7 @@ body {
 
 .ship-bar {
   display: flex;
-  gap: 2px;
+  gap: 1px;
 }
 
 .mini-cell {
