@@ -20,7 +20,12 @@ const DOMController = (() => {
     init();
   }
 
-  return { init, switchToPlay };
+  function switchToPlacement() {
+    GameController.resetGame();
+    init();
+  }
+
+  return { init, switchToPlay, switchToPlacement };
 })();
 
 export default DOMController;

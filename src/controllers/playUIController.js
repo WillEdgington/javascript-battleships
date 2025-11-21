@@ -1,3 +1,4 @@
+import DOMController from "./domController.js";
 import GameController from "./gameController.js";
 
 const PlayUIController = (() => {
@@ -7,6 +8,7 @@ const PlayUIController = (() => {
   let enemyBoardEl;
   let playerStatusEl;
   let enemyStatusEl;
+  let playAgainBtn;
 
   function init(state, container) {
     root = container;
@@ -22,6 +24,15 @@ const PlayUIController = (() => {
 
     messageEl = document.createElement("div");
     messageEl.id = "message";
+
+    playAgainBtn = document.createElement("button");
+    playAgainBtn.id = "play-again";
+    playAgainBtn.textContent = "Play Again";
+    playAgainBtn.style.display = "none"
+
+    playAgainBtn.addEventListener("click", () => {
+      DOMController.switchToPlacement();
+    });
 
     const boards = document.createElement("div");
     boards.id = "boards";
@@ -48,6 +59,7 @@ const PlayUIController = (() => {
     boards.appendChild(enemyStatusEl);
     wrapper.appendChild(boards);
     wrapper.appendChild(messageEl);
+    wrapper.appendChild(playAgainBtn);
 
     root.appendChild(wrapper);
   }
@@ -58,7 +70,7 @@ const PlayUIController = (() => {
     const state = GameController.getState();
     render(state);
     if (state.gameOver) {
-      showMessage(`${result.attacker.isComputer ? "Computer" : "Player"} wins`);
+      endGame(state);
     } else if (!result.valid) {
       showMessage("invalid move.");
     } else if (state.curPlayer.isComputer) {
@@ -154,6 +166,11 @@ const PlayUIController = (() => {
 
   function showMessage(msg) {
     document.querySelector("#message").textContent = msg;
+  }
+
+  function endGame(state) {
+    showMessage(`${state.curPlayer.isComputer ? "Computer" : "Player"} wins`);
+    playAgainBtn.style.display = "block";
   }
 
   return { init };

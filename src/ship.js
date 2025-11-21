@@ -6,6 +6,9 @@ export default function Ship(length, x, y, horizontal) {
 
   const hit = () => { if (hits < length) hits++; };
   const isSunk = () => hits >= length;
+  function resetHits() {
+    hits = 0;
+  }
 
   return {
     get length() { return length; },
@@ -15,5 +18,6 @@ export default function Ship(length, x, y, horizontal) {
     horizontal,
     hit,
     isSunk,
+    resetHits,
   };
 }

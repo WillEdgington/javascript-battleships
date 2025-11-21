@@ -33,6 +33,24 @@ const GameController = (() => {
     return getState();
   }
 
+  function resetGame() {
+    if (player1.isComputer) {
+      player1 = Player(true);
+      PlacementController.randomise(player1.gameboard);
+    } else player1.gameboard.reset(false);
+
+    if (player2.isComputer) {
+      player2 = Player(true);
+      PlacementController.randomise(player2.gameboard);
+    } else player1.gameboard.reset(false);
+
+    gameOver = false;
+    curTurn = null;
+    state = GameState.PLACEMENT;
+
+    return getState();
+  }
+
   function startPlay() {
     curTurn = new TurnNode(player1);
     curTurn.next = new TurnNode(player2);
@@ -73,6 +91,7 @@ const GameController = (() => {
     startPlay,
     playerAttack,
     getState,
+    resetGame,
     get attacking() { return curTurn.player; },
     get defending() { return curTurn.next.player; },
     get state() { return state; },

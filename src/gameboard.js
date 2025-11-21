@@ -7,14 +7,19 @@ export default function Gameboard(size = 10) {
   const ships = [];
   const missedAttacks = [];
   
-  function reset() {
+  function reset(resetShips=true) {
     for (let y = 0; y < size; y++) {
       for (let x = 0; x < size; x++) {
-        board[y][x].ship = null;
+        if (resetShips) board[y][x].ship = null;
         board[y][x].canHit = true;
       }
     }
-    ships.length = 0;
+    if (resetShips) ships.length = 0;
+    else {
+      ships.forEach(ship => {
+        ship.resetHits();
+      });
+    }
     missedAttacks.length = 0;
   }
   
