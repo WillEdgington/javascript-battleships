@@ -1,6 +1,7 @@
 import PlacementController from "./placementController.js";
 import GameController from "./gameController.js";
 import DOMController from "./domController.js";
+import { wrapBoardWithCoordinates, wrapTitleAndMessageBoard } from "../utils/UIhelpers.js";
 
 const PlacementUIController = (() => {
   let root;
@@ -46,9 +47,17 @@ const PlacementUIController = (() => {
     boardEl.id = "placement-board";
     boardEl.classList.add("board");
 
-    wrapper.appendChild(boardEl);
+    const size = gameboard !== null ? gameboard.board.length : 10;
+    const wrappedBoard = wrapBoardWithCoordinates(boardEl, size)
+
+    wrapper.appendChild(wrappedBoard);
     wrapper.appendChild(controls);
 
+    const messageEl = document.createElement("p");
+    messageEl.id = "message";
+    messageEl.textContent = "Place your ships and press play."
+
+    root.appendChild(wrapTitleAndMessageBoard(messageEl));
     root.appendChild(wrapper);
   }
 

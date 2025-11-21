@@ -1,8 +1,10 @@
+import { wrapBoardWithCoordinates, wrapTitleAndMessageBoard } from "../utils/UIhelpers.js";
 import DOMController from "./domController.js";
 import GameController from "./gameController.js";
 
 const PlayUIController = (() => {
   let root;
+  let size;
   let messageEl;
   let playerBoardEl;
   let enemyBoardEl;
@@ -12,6 +14,7 @@ const PlayUIController = (() => {
 
   function init(state, container) {
     root = container;
+    size = state.player1.gameboard.board.length;
     buildLayout();
     render(state);
   }
@@ -53,14 +56,18 @@ const PlayUIController = (() => {
     enemyBoardEl.id = "enemy-board";
     enemyBoardEl.classList.add("board")
 
+    const wrappedPlayer = wrapBoardWithCoordinates(playerBoardEl, size);
+    const wrappedEnemy = wrapBoardWithCoordinates(enemyBoardEl, size);
+
     boards.appendChild(playerStatusEl);
-    boards.appendChild(playerBoardEl);
-    boards.appendChild(enemyBoardEl);
+    boards.appendChild(wrappedPlayer);
+    boards.appendChild(wrappedEnemy);
     boards.appendChild(enemyStatusEl);
+
     wrapper.appendChild(boards);
-    wrapper.appendChild(messageEl);
     wrapper.appendChild(playAgainBtn);
 
+    root.appendChild(wrapTitleAndMessageBoard(messageEl));
     root.appendChild(wrapper);
   }
 
