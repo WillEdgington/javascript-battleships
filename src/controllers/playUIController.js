@@ -72,22 +72,20 @@ const PlayUIController = (() => {
   }
 
   function playCell(x=null, y=null) {
-    showMessage("");
     const result = GameController.playerAttack(x, y);
     const state = GameController.getState();
-    render(state);
-    if (state.gameOver) {
-      endGame(state);
-    } else if (!result.valid) {
-      showMessage("invalid move.");
-    } else if (state.curPlayer.isComputer) {
-      playCell();
+    render(state, result.valid);
+    if (state.curPlayer.isComputer && !state.gameOver) {
+      setTimeout(() => {
+        playCell();
+      }, Math.max(200 ,Math.random() * 1500));
     }
   }
 
-  function render(state) {
+  function render(state, valid=true) {
     renderBoards(state.player1.gameboard, state.player2.gameboard);
-    if (!state.gameOver) attachListenersToEnemyBoard();
+    if (!state.gameOver || !state.curPlayer.isComputer) attachListenersToEnemyBoard();
+    renderMessage(state, valid);
   }
 
   function renderBoards(gameboard1, gameboard2) {
@@ -171,13 +169,16 @@ const PlayUIController = (() => {
     });
   }
 
-  function showMessage(msg) {
-    document.querySelector("#message").textContent = msg;
-  }
-
-  function endGame(state) {
-    showMessage(`${state.curPlayer.isComputer ? "Computer" : "Player"} wins`);
-    playAgainBtn.style.display = "block";
+  function renderMessage(state, valid=true) {
+    let name = state.curPlayer.isComputer ? "Computer" : "Player"
+    if (state.gameOver) {
+      messageEl.textContent = `${name} wins!`;
+      playAgainBtn.style.display = "block";
+    } else if (!valid) {
+      messageEl.textContent = `Invalid move. try again`
+    } else {
+      messageEl.textContent = `${name}'s turn. pick a grey square on your opponents board.`
+    }
   }
 
   return { init };
