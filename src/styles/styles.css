@@ -1,15 +1,48 @@
+:root {
+  --cell: min(6vw, 6vh, 30px);
+  --coord: calc(var(--cell) * 0.9);
+  --mini: calc(var(--cell) * 0.33);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(55, 181, 240);
+}
+
+#app {
+  background-color: white;
+  width: min(100%, max(80%, 1240px));
+  min-height: 100%;
+  box-shadow: 0px 0px 20px rgba(10, 10, 10, 0.315);
+  padding: 20px;
+  gap: 5px;
 }
 
 .h1 {
   font-size: large;
 }
 
+.board-wrapper {
+  display: grid;
+  grid-template-columns: var(--coord) repeat(10, calc(var(--cell) * 1.08));
+  grid-template-rows: var(--coord) repeat(10, calc(var(--cell) * 1.08));
+  position: relative;
+}
+
 #boards {
   display: flex;
   gap: 40px;
   margin: auto;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .board,
@@ -17,25 +50,36 @@ body {
   grid-row: 2;
   grid-column: 2;
   display: grid;
-  grid-template-columns: repeat(10, 30px);
-  grid-template-rows: repeat(10, 30px);
-  gap: 2px;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-template-rows: repeat(10, var(--cell));
+  gap: calc(var(--cell) * 0.08);
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
+  width: var(--cell);
+  height: var(--cell);
   background: #d0d0d0;
-  border: 1px solid #999;
+  border: calc(var(--cell) * 0.08) solid #999;
 }
 
-#enemy-board div.cell {
-  cursor: pointer;
+.coord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell) * 0.45);
+}
+
+.coord-top {
+  grid-row: 1;
+}
+
+.coord-left {
+  grid-column: 1;
 }
 
 .board div.hit {
   background: red;
-  border: 1px solid red;
+  border: calc(var(--cell) * 0.08) solid red;
 }
 
 .board div.miss {
@@ -44,11 +88,28 @@ body {
 
 .board div.ship {
   background: rgb(18, 4, 216);
-  border: 1px solid rgb(18, 4, 216);
+  border: calc(var(--cell) * 0.08) solid rgb(18, 4, 216);
 }
 
 #placement-board div.ship {
   cursor: grab;
+}
+
+#placement-board .ship:active {
+  cursor: grabbing;
+}
+ 
+#enemy-board .cell:not(.hit):not(.miss) {
+  cursor: pointer;
+}
+
+#enemy-board .cell:not(.hit):not(.miss):hover {
+  filter: brightness(0.85);
+}
+
+#enemy-board .cell.hit,
+#enemy-board .cell.miss {
+  cursor: default;
 }
 
 .ship-status {
@@ -64,38 +125,35 @@ body {
 
 .ship-bar {
   display: flex;
-  gap: 1px;
 }
 
 .mini-cell {
-  width: 10px;
-  height: 10px;
+  width: var(--mini);
+  height: var(--mini);
   background: #4e4e4e;
-  border: 1px solid #000;
+  border: calc(var(--mini) * 0.12) solid #000;
 }
 
 .ship-bar.sunk .mini-cell {
   background: red;
 }
 
-.board-wrapper {
-  display: grid;
-  grid-template-columns: 30px repeat(10, 32px);
-  grid-template-rows: 30px repeat(10, 32px);
-  position: relative;
+@media (max-width: 1000px) {
+  #boards {
+    gap: 20px;
+  }
 }
 
-.coord {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
+@media (max-aspect-ratio: 5/6) {
+  #boards {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
 }
 
-.coord-top {
-  grid-row: 1;
-}
-
-.coord-left {
-  grid-column: 1;
+@media (max-height: 500px) {
+  .title {
+    display: none;
+  }
 }
