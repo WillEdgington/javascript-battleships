@@ -63,11 +63,11 @@ const GameController = (() => {
   function playerAttack(x=null, y=null) {
     const attacker = curTurn.player;
     const defender = curTurn.next.player;
-    if (!attacker.attack(defender, x, y)) return { valid: false };
+    let attack = attacker.attack(defender, x, y)
+    if (!attack) return { valid: false };
     
-    const allSunk = defender.gameboard.allShipsSunk();
-    if (!allSunk) curTurn = curTurn.next;
-    else gameOver = true;
+    if (attack.hit) gameOver = defender.gameboard.allShipsSunk();
+    else curTurn = curTurn.next;
     
     return {
       valid: true,

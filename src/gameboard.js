@@ -77,12 +77,12 @@ export default function Gameboard(size = 10) {
 
   function receiveAttack(x, y) {
     const cell = board[y][x];
-    if (!cell.canHit) return false;
+    if (!cell.canHit) return { valid: false };
     board[y][x].canHit = false;
 
     if (cell.ship) cell.ship.hit();
     else missedAttacks.push([x, y]);
-    return true;
+    return { valid: true, hit: cell.ship !== null};
   }
   
   function allShipsSunk() {

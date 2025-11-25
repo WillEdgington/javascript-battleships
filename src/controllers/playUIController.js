@@ -78,7 +78,7 @@ const PlayUIController = (() => {
     if (state.curPlayer.isComputer && !state.gameOver) {
       setTimeout(() => {
         playCell();
-      }, Math.max(200 ,Math.random() * 1500));
+      }, Math.max(200 ,Math.random() * 1000));
     }
   }
 

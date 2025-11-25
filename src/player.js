@@ -79,7 +79,7 @@ export default function Player(isComputer=false) {
    
   function attack(opponent, x=null, y=null) {
     if (x === null || y === null) {
-      if (!isComputer) return false;
+      if (!isComputer) return { valid: false, hit: false };
       const coords = getRobotXY(opponent);
       x = coords.x;
       y = coords.y;
