@@ -74,7 +74,7 @@ const PlayUIController = (() => {
   function playCell(x=null, y=null) {
     const result = GameController.playerAttack(x, y);
     const state = GameController.getState();
-    render(state, result.valid);
+    render(state, result.valid, result.hit);
     if (state.curPlayer.isComputer && !state.gameOver) {
       setTimeout(() => {
         playCell();
@@ -82,10 +82,10 @@ const PlayUIController = (() => {
     }
   }
 
-  function render(state, valid=true) {
+  function render(state, valid=true, hit=false) {
     renderBoards(state.player1.gameboard, state.player2.gameboard);
-    if (!state.gameOver || !state.curPlayer.isComputer) attachListenersToEnemyBoard();
-    renderMessage(state, valid);
+    if (!state.gameOver && !state.curPlayer.isComputer) attachListenersToEnemyBoard();
+    renderMessage(state, valid, hit);
   }
 
   function renderBoards(gameboard1, gameboard2) {
@@ -169,7 +169,7 @@ const PlayUIController = (() => {
     });
   }
 
-  function renderMessage(state, valid=true) {
+  function renderMessage(state, valid=true, hit=false) {
     let name = state.curPlayer.isComputer ? "Computer" : "Player"
     if (state.gameOver) {
       messageEl.textContent = `${name} wins!`;
@@ -177,7 +177,8 @@ const PlayUIController = (() => {
     } else if (!valid) {
       messageEl.textContent = `Invalid move. try again`
     } else {
-      messageEl.textContent = `${name}'s turn. pick a grey square on your opponents board.`
+      let hitmsg = hit == true ? "Hit! " : "";
+      messageEl.textContent = `${hitmsg}${name}'s turn. pick a grey square on your opponents board.`
     }
   }
 

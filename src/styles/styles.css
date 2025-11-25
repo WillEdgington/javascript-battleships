@@ -19,7 +19,7 @@ body {
 
 #app {
   background-color: white;
-  width: min(100%, max(80%, 1240px));
+  width: min(100%, max(80%, 1140px));
   min-height: 100%;
   box-shadow: 0px 0px 20px rgba(10, 10, 10, 0.315);
   padding: 20px;

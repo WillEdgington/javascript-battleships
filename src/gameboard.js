@@ -77,7 +77,7 @@ export default function Gameboard(size = 10) {
 
   function receiveAttack(x, y) {
     const cell = board[y][x];
-    if (!cell.canHit) return { valid: false };
+    if (!cell.canHit) return { valid: false, hit: false };
     board[y][x].canHit = false;
 
     if (cell.ship) cell.ship.hit();
