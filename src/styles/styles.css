@@ -9,6 +9,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: clip;
 }
 
 body {
@@ -23,12 +24,14 @@ body {
 #app {
   background-color: white;
   width: min(100%, max(80%, 1140px));
-  height: 100%;
+  height: 100vh;
   box-shadow: 0px 0px 20px rgba(10, 10, 10, 0.315);
   padding: calc(var(--relpxl) * 10) calc(var(--relpxl) * 20);
   display: flex;
   flex-direction: column;
   gap: calc(var(--relpxl) * 28) 0;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 #app-header {
@@ -163,6 +166,7 @@ body {
   margin-top: calc(var(--relpxl) * 5);
   border-top: 1px solid #ddd;
   padding-top: calc(var(--relpxl) * 20);
+  padding-bottom: calc(var(--relpxl) * 10);
   color: #333;
   font-size: 0.9rem;
   display: flex;
@@ -248,10 +252,6 @@ button:active {
 
 @media (max-height: 500px) {
   .title {
-    display: none;
-  }
-
-  .app-footer {
     display: none;
   }
 }
