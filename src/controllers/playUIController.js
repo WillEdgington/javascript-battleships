@@ -1,4 +1,4 @@
-import { wrapBoardWithCoordinates, wrapTitleAndMessageBoard } from "../utils/UIhelpers.js";
+import { createFooter, wrapBoardWithCoordinates, wrapTitleAndMessageBoard } from "../utils/UIhelpers.js";
 import DOMController from "./domController.js";
 import GameController from "./gameController.js";
 
@@ -69,6 +69,7 @@ const PlayUIController = (() => {
 
     root.appendChild(wrapTitleAndMessageBoard(messageEl));
     root.appendChild(wrapper);
+    root.appendChild(createFooter());
   }
 
   function playCell(x=null, y=null) {

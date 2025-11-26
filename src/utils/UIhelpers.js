@@ -36,5 +36,32 @@ export function wrapTitleAndMessageBoard(messageEl, titleEl=null) {
   const wrapper = document.createElement("div");
   wrapper.appendChild(titleEl);
   wrapper.appendChild(messageEl);
+  wrapper.id = "app-header";
   return wrapper;
+}
+
+export function createFooter() {
+  const footer = document.createElement("div");
+  footer.id = "app-footer";
+
+  const rules = document.createElement("p");
+  rules.classList.add("rules");
+
+  rules.textContent = "This is Battleships. Place your ships, then press Play. Click a cell on the enemy board to fire a shot. Sink all ships to win.";
+
+  const links = document.createElement("div");
+  links.classList.add("links")
+
+  const github = document.createElement("a")
+  github.href = "https://github.com/WillEdgington";
+  github.classList.add("link");
+  github.target = "_blank";
+  github.textContent = "Github"
+  
+  links.appendChild(github);
+  
+  footer.appendChild(rules);
+  footer.appendChild(links);
+
+  return footer
 }

@@ -1,7 +1,8 @@
 :root {
-  --cell: min(6vw, 6vh, 30px);
+  --cell: min(2.5vw, 6vh, 30px);
   --coord: calc(var(--cell) * 0.9);
   --mini: calc(var(--cell) * 0.33);
+  --relpxl: calc(var(--cell) * 0.033);
 }
 
 html, body {
@@ -15,19 +16,37 @@ body {
   display: flex;
   justify-content: center;
   background-color: rgb(55, 181, 240);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
 }
 
 #app {
   background-color: white;
   width: min(100%, max(80%, 1140px));
-  min-height: 100%;
+  height: 100%;
   box-shadow: 0px 0px 20px rgba(10, 10, 10, 0.315);
-  padding: 20px;
-  gap: 5px;
+  padding: calc(var(--relpxl) * 10) calc(var(--relpxl) * 20);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--relpxl) * 28) 0;
 }
 
-.h1 {
-  font-size: large;
+#app-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#message {
+  margin: auto;
+  margin-right: 0;
+}
+
+#placement-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .board-wrapper {
@@ -39,7 +58,7 @@ body {
 
 #boards {
   display: flex;
-  gap: 40px;
+  gap: calc(var(--relpxl) * 40);
   margin: auto;
   flex-wrap: wrap;
   justify-content: center;
@@ -115,12 +134,12 @@ body {
 .ship-status {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: calc(var(--relpxl) * 8);
 }
 
 .ship-row {
   display: flex;
-  gap: 10px;
+  gap: calc(var(--relpxl) * 10);
 }
 
 .ship-bar {
@@ -138,17 +157,92 @@ body {
   background: red;
 }
 
-@media (max-width: 1000px) {
-  #boards {
-    gap: 20px;
-  }
+/* footer styles */
+
+#app-footer {
+  margin-top: calc(var(--relpxl) * 5);
+  border-top: 1px solid #ddd;
+  padding-top: calc(var(--relpxl) * 20);
+  color: #333;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--relpxl) * 12);
+}
+
+#app-footer .rules {
+  margin: 0;
+  line-height: 1.4;
+  max-width: 800px;
+}
+
+#app-footer .links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+#app-footer .links a {
+  text-decoration: none;
+  color: rgb(0, 92, 196);
+  font-weight: 600;
+}
+
+#app-footer .links a:hover {
+  text-decoration: underline;
+}
+
+/* new stylings */
+
+/* button */
+
+#placement-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: calc(var(--relpxl) * 20);
+  gap: calc(var(--relpxl) * 50);
+}
+
+button {
+  background: rgb(4, 153, 240);
+  border: none;
+  color: white;
+  padding: calc(var(--relpxl) * 6) calc(var(--relpxl) * 13);
+  font-size: 1rem;
+  border-radius: calc(var(--relpxl) * 4);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.15s ease transform 0.1s ease;
+}
+
+button:hover {
+  background-color: rgb(4, 108, 236);
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 @media (max-aspect-ratio: 5/6) {
+  :root {
+    --cell: min(7.5vw, 2.5vh, 30px);
+  }
+
+  #app {
+    gap: calc(var(--relpxl) * 21);
+  }
+
   #boards {
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: calc(var(--relpxl) * 30);
+  }
+
+  #app-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 
@@ -156,4 +250,13 @@ body {
   .title {
     display: none;
   }
+
+  .app-footer {
+    display: none;
+  }
 }
+
+/* debug */
+/* * {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+} */

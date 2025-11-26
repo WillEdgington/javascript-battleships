@@ -1,7 +1,7 @@
 import PlacementController from "./placementController.js";
 import GameController from "./gameController.js";
 import DOMController from "./domController.js";
-import { wrapBoardWithCoordinates, wrapTitleAndMessageBoard } from "../utils/UIhelpers.js";
+import { createFooter, wrapBoardWithCoordinates, wrapTitleAndMessageBoard } from "../utils/UIhelpers.js";
 
 const PlacementUIController = (() => {
   let root;
@@ -59,6 +59,7 @@ const PlacementUIController = (() => {
 
     root.appendChild(wrapTitleAndMessageBoard(messageEl));
     root.appendChild(wrapper);
+    root.appendChild(createFooter());
   }
 
   function renderBoard() {
