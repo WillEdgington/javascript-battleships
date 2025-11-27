@@ -53,7 +53,7 @@ export function createFooter() {
   links.classList.add("links")
 
   const github = document.createElement("a")
-  github.href = "https://github.com/WillEdgington";
+  github.href = "https://github.com/WillEdgington/javascript-battleships";
   github.classList.add("link");
   github.target = "_blank";
   github.textContent = "Github"
