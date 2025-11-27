@@ -246,7 +246,12 @@ button:active {
   #app-header {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: left;
+  }
+
+  #message {
+    margin: auto;
+    margin-left: 0;
   }
 }
 
