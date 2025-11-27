@@ -1,4 +1,5 @@
 # Battleship
+[**Click here**](https://willedgington.github.io/javascript-battleships/) to check out the application deployed on **GitHub Pages**!
 
 An implementation of the classic game 'Battleship' built with **JavaScript**, **HTML**, and **CSS**. The project features a ship-placement phase, a turn-based play phase, and an intelligent computer opponent using a priority-based targeting algorithm.
 
